@@ -4,7 +4,7 @@
         private $name;          //Name
         private $id;            //Id
         private $tokenSymbol;   //Tokencharacter 
-        private $onTurn;        //Is the Player on Turn
+        private $onTurn = false;        //Is the Player on Turn
 
         /**
          * Construct the Player object
@@ -54,6 +54,15 @@
          */
         public function isOnTurn() {
             return $this->onTurn;
+        }
+
+        /**
+         * Set $onTurn
+         * @param boolean $onTurn
+         * @return void
+         */
+        public function setOnTurn($onTurn) {
+            $this->onTurn = $onTurn;
         }
 
 

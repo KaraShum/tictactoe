@@ -10,7 +10,11 @@ class Board {
      * @return void
      */
     public function __construct($boardSize){
-        
+        for ($i = 0; $i < $boardSize; $i++) {
+            for ($j = 0; $j < $boardSize; $j++) {
+                $this->boardArray[$i][$j] = "";
+            }
+        }
     }
 
     /**
@@ -18,7 +22,7 @@ class Board {
      * @return array
      */
     public function getBoardArray(){
-
+        return $this->boardArray;
     }
 
     /**
@@ -27,7 +31,7 @@ class Board {
      * @return void
      */
     public function setBoardArray($boardArray){
-
+        $this->boardArray = $boardArray;
     }
 
 }

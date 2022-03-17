@@ -14,13 +14,17 @@ class TicTacToe {
      * @param string $tokenValue
      * @param string $tokenValue2
      * @return void
-     * $playerName2, $tokenValue2, $tokenValue Changed on 17.03.2022
+     * $playerName2, $tokenValue2, $tokenValue changed on 17.03.2022
      */
     public function __construct($playerName,$playerName2, $boardSize, $tokenValue, $tokenValue2){
         $this->allPlayers[0] = new Player($playerName);
-        $this->allPlayers[1] = new Player($playerName2);
         $this->allPlayers[0]->setTokenSymbol($tokenValue);
+        $this->allPlayers[0]->setOnTurn(true);
+
+        $this->allPlayers[1] = new Player($playerName2);
         $this->allPlayers[1]->setTokenSymbol($tokenValue2);
+
+        $this->board = new Board($boardSize);
     }
 
     /**
@@ -28,7 +32,13 @@ class TicTacToe {
      * @return void
      */
     private function setCurrentPlayer(){
-
+        foreach ($this->allPlayers as $key => $value) {
+            if ($value->isOnTurn() === true) {
+                $value->setOnTurn(false);
+            } else {
+                $value->setOnTurn(true);
+            }
+        }
     }
 
     /**
@@ -36,7 +46,13 @@ class TicTacToe {
      * @return void
      */
     private function checkWin(){
+        $playerWon = false;
 
+        if ($playerWon === false)  {
+            $this->setCurrentPlayer();
+        } else {
+            $this->announceWinner();
+        }
     }
 
     /**
