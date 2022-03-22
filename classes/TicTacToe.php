@@ -33,7 +33,7 @@ class TicTacToe {
      */
     private function setCurrentPlayer(){
         foreach ($this->allPlayers as $player) {
-            $player->setOnTurn(!$player->isOnTugrn());  
+            $player->setOnTurn(!$player->isOnTurn());  
         }
     }
 
@@ -43,6 +43,14 @@ class TicTacToe {
      */
     private function checkWin(){
         $playerWon = false;
+        
+        // [X, X, O]  [00, 10, 20]  
+        // [O, X, O]  [01, 11, 21]
+        // [X, O, X]  [02, 12, 22]
+
+        
+
+
 
         if ($playerWon === false)  {
             $this->setCurrentPlayer();

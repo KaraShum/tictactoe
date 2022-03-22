@@ -33,7 +33,6 @@ class Board {
     public function setBoardArray($boardArray){
         $this->boardArray = $boardArray;
     }
-
 }
 
 ?>
