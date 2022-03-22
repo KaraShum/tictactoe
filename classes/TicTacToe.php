@@ -32,12 +32,8 @@ class TicTacToe {
      * @return void
      */
     private function setCurrentPlayer(){
-        foreach ($this->allPlayers as $key => $value) {
-            if ($value->isOnTurn() === true) {
-                $value->setOnTurn(false);
-            } else {
-                $value->setOnTurn(true);
-            }
+        foreach ($this->allPlayers as $player) {
+            $player->setOnTurn(!$player->isOnTugrn());  
         }
     }
 
