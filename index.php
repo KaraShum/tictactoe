@@ -108,8 +108,7 @@ require_once 'src/TicTacToe.php';
             <form method="get" action="index.php">
                 <table class="tic">
                     <caption id="player">Hans is an der Reihe!</caption>
-                    <?php
-                
+                    <?php                
                      $ttt->draw();
                     ?>
                 </table>
