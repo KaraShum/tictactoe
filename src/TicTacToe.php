@@ -67,27 +67,30 @@ class TicTacToe {
      * @return void
      */
     public function checkWin(){
-        $tempCount = 0;
+        $countHorizontal = 0;
+        $countVertical = 0;
+        $countDiagonalTopBottom = 0;
+        $countDiagonalBottomTop = 0;
         $board = $this->board->getBoardArray();
         $length = count($board) - 1; 
         $token = $this->currentPlayer->getTokenSymbol();
 
         // check horizontal
         for($i = 0; $i <= $length; $i++){
-            $tempCount = 0;
+            $countHorizontal = 0;
             for($j = 0; $j <= $length; $j++){
                 if(isset($_GET['cell-'.$i.'-'.$j]) && $_GET['cell-'.$i.'-'.$j] == $token){
-                    $tempCount++;
+                    $countHorizontal++;
                 }
             }
         }
 
         // check vertical
-                for($i = 0; $i <= $length; $i++){
-                    $tempCount = 0;
-                    for($j = 0; $j <= $length; $j++){
-                        if(isset($_GET['cell-'.$j.'-'.$i]) && $_GET['cell-'.$j.'-'.$i] == $token){
-                            $tempCount++;
+        for($i = 0; $i <= $length; $i++){
+           $countVertical = 0;
+           for($j = 0; $j <= $length; $j++){
+              if(isset($_GET['cell-'.$j.'-'.$i]) && $_GET['cell-'.$j.'-'.$i] == $token){
+                  $countVertical++;
                         }
                     }
                 }
@@ -95,21 +98,22 @@ class TicTacToe {
         // check diagonal top-left to bottom-right
         for ($i = 0; $i <= $length; $i ++) {
             if(isset($_GET['cell-'.$i.'-'.$i]) && $_GET['cell-'.$i.'-'.$i] == $token){
-                $tempCount++;
+                $countDiagonalTopBottom++;
             }
         }
 
         // check diagonal bottom-left to top-right
         for ($i = 0; $i < $length; $i++) {
             $j = ($length - 1) - $i;
-            if(isset($_GET['cell-'.$i.'-'.$j]) && $_GET['cell-'.$i.'-'.$j] == $token){
-                $tempCount++;
+            if(isset($_GET['cell-'.$j.'-'.$i]) && $_GET['cell-'.$j.'-'.$i] == $token){
+                $countDiagonalBottomTop++;
             }
         }
 
         var_dump($board);
 
-        if ($tempCount === 3)  {
+        if ($countHorizontal === 3 || $countVertical === 3 
+        || $countDiagonalBottomTop === 3 || $countDiagonalBottomTop === 3)  {
             $this->announceWinner();
         } else {
             $this->setCurrentPlayer();
