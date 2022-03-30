@@ -1,5 +1,6 @@
 body {
-    background-color: #77e;
+    background-color: #01579B;
+    color: white;
 }
 table.tic td {
     border: 1px solid #333; /* grey cell borders */
