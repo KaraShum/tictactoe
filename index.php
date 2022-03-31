@@ -1,38 +1,33 @@
 <?php
-session_start();
-if (!isset($_SESSION["TicTacToe"])) {
-?>
-    <form method="get" action="index.php">
-        <input type="text" placeholder="Spieler 1" name="name">
-        <input type="text" placeholder="Spieler 2" name="name2">
-        <input type="submit" value="Senden">
-    </form>
-<?php
-}
-require_once 'src/Board.php';
-require_once 'src/Player.php';
-require_once 'src/TicTacToe.php';
 
-if (isset($_GET['reset'])) {
-    $ttt = unserialize($_SESSION["TicTacToe"]);
+/**
+ * index.php
+ * 
+ * Starting point of the Program
+ * 
+ * @author Kevin
+ * https://github.com/KaraShum/tictactoe
+ */
+session_start();
+define('BASEPATH', realpath(dirname(__FILE__)));
+require_once(BASEPATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
+
+if (isset($_POST['reset']) && isset($_SESSION['TicTacToe'])) {
+    $ttt = unserialize($_SESSION['TicTacToe']);
 
     $ttt->resetGame();
 
+    $_SESSION['TicTacToe'] = serialize($ttt);
+} elseif (!isset($_SESSION['TicTacToe'])) {
+    $ttt = new TicTacToe('Spieler 1', 'Spieler 2');
 
-    $_SESSION["TicTacToe"] = serialize($ttt);
-} elseif (!isset($_SESSION["TicTacToe"])) {
-    $ttt = new TicTacToe($_GET["name"], $_GET["name2"]);
-
-
-    $_SESSION["TicTacToe"] = serialize($ttt);
+    $_SESSION['TicTacToe'] = serialize($ttt);
 } else {
-    $ttt = unserialize($_SESSION["TicTacToe"]);
+    $ttt = unserialize($_SESSION['TicTacToe']);
     $ttt->updateBoard();
     $ttt->checkWin();
 
-
-
-    $_SESSION["TicTacToe"] = serialize($ttt);
+    $_SESSION['TicTacToe'] = serialize($ttt);
 }
 ?>
 
@@ -45,8 +40,14 @@ if (isset($_GET['reset'])) {
     <meta name="description" content="Tic-Tac-Toe-Game. Here is a short description for the page. This text is displayed e. g. in search engine result listings.">
     <style>
         body {
-            background-color: #01579B;
+            background-color: #424242;
             color: white;
+        }
+
+        #container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         table.tic td {
@@ -64,12 +65,13 @@ if (isset($_GET['reset'])) {
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 2rem;
-            
+
         }
 
         input.field {
+            background-color: #424242;
             border: 0;
-            background-color: #01579B;
+            border-color: white;
             color: white;
             /* make the value invisible (white) */
             height: 8rem;
@@ -99,25 +101,61 @@ if (isset($_GET['reset'])) {
         table.tic {
             border-collapse: collapse;
         }
+
+        .resetGame {
+            box-shadow: inset 0px 1px 0px 0px #54a3f7;
+            background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+            background-color: #007dc1;
+            border-radius: 3px;
+            border: 1px solid #124d77;
+            display: inline-block;
+            margin-left: 45%;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 13px;
+            padding: 6px 24px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #154682;
+        }
+
+        .resetGame:hover {
+            background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+            background-color: #0061a7;
+        }
+
+        .resetGame:active {
+            position: relative;
+            top: 1px;
+        }
     </style>
 </head>
 
 <body>
-    <section>
-        <h1>Tic-Tac-Toe</h1>
-        <article id="mainContent">
-            <h2>Your free browsergame!</h2>
-            <p>Type your game instructions here...</p>
-            <form method="get" action="index.php">
-                <table class="tic">
-                    <?php
-                    $ttt->draw();
-                    ?>
-                </table>
-                <input type="submit" name="reset" value="Neues Spiel" />
-            </form>
-        </article>
-    </section>
+    <div id="container">
+        <div id="content">
+            <section>
+                <h1>Tic-Tac-Toe</h1>
+                <article>
+                    <h2>Your free browsergame!</h2>
+                    <p>Two players play on a 3 by 3 square. One Player places X and the other places O.
+                        If one player gets 3 in a row, column or diagonally he/she wins. If no winner is found
+                        the game ends in a draw.
+                    </p>
+                    <form method="get" action="index.php">
+                        <table class="tic">
+                            <?php
+                            $ttt->draw();
+                            ?>
+                        </table>
+                    </form>
+                    <form method="post">
+                        <input class="resetGame" type="submit" name="reset" value="Neues Spiel" />
+                    </form>
+                </article>
+            </section>
+        </div>
+    </div>
 </body>
 
 </html>

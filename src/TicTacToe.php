@@ -1,5 +1,4 @@
 <?php
-
 class TicTacToe
 {
 
@@ -75,11 +74,12 @@ class TicTacToe
         $countVertical = 0;
         $countDiagonalTopBottom = 0;
         $countDiagonalBottomTop = 0;
+        $countDraw = 0;
         $board = $this->board->getBoardArray();
         $length = count($board) - 1;
-        $token = $this->currentPlayer->getTokenSymbol();        
-        // check horizontal
+        $token = $this->currentPlayer->getTokenSymbol();
 
+        // check horizontal
         for ($i = 0; $i <= $length; $i++) {
             if ($countHorizontal === 3) {
                 break;
@@ -116,37 +116,60 @@ class TicTacToe
         }
 
         // check diagonal bottom-left to top-right
-        for ($i = 0; $i < $length; $i++) {
-            $j = ($length - 1) - $i;
+        for ($i = 0; $i <= $length; $i++) {
+            $j = $length - $i;
             if ($board[$j][$i] === $token) {
                 $countDiagonalBottomTop++;
             }
         }
 
-        
+        // check draw
+        for ($i = 0; $i <= $length; $i++) {
+            for ($j = 0; $j <= $length; $j++) {
+                if ($board[$j][$i] != "") {
+                    $countDraw++;
+                }
+            }
+        }
 
         if (
-            $countHorizontal === 3 or $countVertical === 3
-            or $countDiagonalTopBottom === 3 or $countDiagonalBottomTop === 3
+            $countHorizontal === 3 || $countVertical === 3
+            || $countDiagonalTopBottom === 3 || $countDiagonalBottomTop === 3
         ) {
             $this->announceWinner();
+        } elseif ($countDraw === 9) {
+            $this->announceDraw();
         } else {
             $this->setCurrentPlayer();
         }
     }
 
     /**
-     * Announce the Winner name
+     * Announce the Winners name
      * @return void
      */
     private function announceWinner()
     {
-        // Todo Logic
-        echo "HALLO DU COOLER GEWINNER!!!!!";
+        $playerName = $this->currentPlayer->getName();
+        echo '<div id="container">
+        <h1>' . $playerName . ' hat gewonnen! </h1>
+        </div>';
     }
 
     /**
-     * Added on 30.03.2022
+     * Added on 31.03.2022 to better split program functionality and seperate different methods
+     * Makes an announcement if the game ends in a draw
+     * @return void
+     */
+    private function announceDraw()
+    {
+        echo '<div id="container">
+        <h1> Das Spiel endet in einem Unentschieden! </h1>
+        </div>';
+    }
+
+    /**
+     * Added on 30.03.2022 to reset the Game state do default values
      * Resets the board to empty values
      * @return void
      */
@@ -167,7 +190,7 @@ class TicTacToe
     /**
      * Start the game
      * @return void
-     * changed name to draw on 29.03.2022
+     * changed name from initGame to draw to better reflect its functionality on 29.03.2022
      */
     public function draw()
     {
