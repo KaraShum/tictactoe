@@ -26,7 +26,7 @@ if (isset($_POST['reset']) && isset($_SESSION['TicTacToe'])) {
     $ttt = unserialize($_SESSION['TicTacToe']);
     $ttt->updateBoard();
     $ttt->checkWin();
-
+    var_dump($_GET);
     $_SESSION['TicTacToe'] = serialize($ttt);
 }
 ?>

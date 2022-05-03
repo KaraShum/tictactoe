@@ -57,8 +57,10 @@ class TicTacToe
         for ($i = 0; $i <= $length; $i++) {
             for ($j = 0; $j <= $length; $j++) {
                 if (isset($_GET['cell-' . $i . '-' . $j]) && $board[$i][$j] == "") {
-                    $board[$i][$j] = $token;
-                    $this->board->setBoardArray($board);
+                    if (filter_input(INPUT_GET, 'cell-'. $i . '-' . $j, FILTER_SANITIZE_STRING)){
+                        $board[$i][$j] = $token;
+                        $this->board->setBoardArray($board);
+                    }
                 }
             }
         }
