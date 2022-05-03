@@ -145,7 +145,7 @@ class TicTacToe
     }
 
     /**
-     * Announce the Winners name
+     * Announce the winners name
      * @return void
      */
     private function announceWinner()

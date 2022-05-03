@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 /**
  * index.php
@@ -8,7 +9,6 @@
  * @author Kevin
  * https://github.com/KaraShum/tictactoe
  */
-session_start();
 define('BASEPATH', realpath(dirname(__FILE__)));
 require_once(BASEPATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
 
